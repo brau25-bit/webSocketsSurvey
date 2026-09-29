@@ -1,0 +1,24 @@
+name: CI pipeline
+
+on: 
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  cache-and-install:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v6
+
+      - name: Configure PNPM
+        uses: pnpm/setup@v1
+        with:
+          version: 11
+          runtime: node@22
+          cache: true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
